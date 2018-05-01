@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebApplication1.data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication1
 {
@@ -22,6 +24,7 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+			services.AddDbContext<DBC>(options => options.UseMySql(Configuration.GetConnectionString("default")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
