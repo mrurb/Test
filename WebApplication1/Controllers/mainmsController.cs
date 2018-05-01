@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         // GET: mainms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.mainm.Include(c => c.user1).Include(c => c.user2).ToListAsync());
+            return View(await _context.mainm.Include(c => c.User1).Include(c => c.User2).Include(c => c.Userlist).ToListAsync());
         }
 
         // GET: mainms/Details/5
@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
             }
 
             var mainm = await _context.mainm
-                .SingleOrDefaultAsync(m => m.id == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (mainm == null)
             {
                 return NotFound();
@@ -58,7 +58,12 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(mainm);
+				var list = new List<user>();
+				list.Add(new user() { id = 1 });
+				list.Add(new user() { id = 2 });
+				mainm.User1 = new user { id = 1 };
+				mainm.User2 = new user { id = 2 };
+				_context.Add(mainm);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -73,7 +78,7 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var mainm = await _context.mainm.SingleOrDefaultAsync(m => m.id == id);
+            var mainm = await _context.mainm.SingleOrDefaultAsync(m => m.Id == id);
             if (mainm == null)
             {
                 return NotFound();
@@ -88,7 +93,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id")] mainm mainm)
         {
-            if (id != mainm.id)
+            if (id != mainm.Id)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace WebApplication1.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!mainmExists(mainm.id))
+                    if (!mainmExists(mainm.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +130,7 @@ namespace WebApplication1.Controllers
             }
 
             var mainm = await _context.mainm
-                .SingleOrDefaultAsync(m => m.id == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (mainm == null)
             {
                 return NotFound();
@@ -139,7 +144,7 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var mainm = await _context.mainm.SingleOrDefaultAsync(m => m.id == id);
+            var mainm = await _context.mainm.SingleOrDefaultAsync(m => m.Id == id);
             _context.mainm.Remove(mainm);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -147,7 +152,7 @@ namespace WebApplication1.Controllers
 
         private bool mainmExists(int id)
         {
-            return _context.mainm.Any(e => e.id == id);
+            return _context.mainm.Any(e => e.Id == id);
         }
     }
 }

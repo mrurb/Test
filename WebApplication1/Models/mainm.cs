@@ -7,9 +7,10 @@ namespace WebApplication1.Models
 {
     public class mainm
     {
-		public user user1 { get; set; }
-		public user user2 { get; set; }
-		public int id { get; set; }
+		public user User1 { get; set; }
+		public user User2 { get; set; }
+		public List<user> Userlist { get; set; }
+		public int Id { get; set; }
 
 	}
 }
