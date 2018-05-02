@@ -12,6 +12,15 @@ namespace WebApplication1.Models
 		public List<Userlist> Userlist { get; set; }
 		public int Id { get; set; }
 
+		public mainm()
+		{
+			Userlist = new List<user>();
+		}
+
+		public mainm(List<user> userlist)
+		{
+			this.Userlist = userlist;
+		}
 	}
 
 	public class Userlist
