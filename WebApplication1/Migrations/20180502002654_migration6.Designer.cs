@@ -11,9 +11,10 @@ using WebApplication1.data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DBC))]
-    partial class DBCModelSnapshot : ModelSnapshot
+    [Migration("20180502002654_migration6")]
+    partial class migration6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,29 +44,15 @@ namespace WebApplication1.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("mainmId");
+
                     b.Property<string>("username");
 
                     b.HasKey("id");
 
-                    b.ToTable("user");
-                });
-
-            modelBuilder.Entity("WebApplication1.Models.Userlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("mainmId");
-
-                    b.Property<int?>("userid");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("mainmId");
 
-                    b.HasIndex("userid");
-
-                    b.ToTable("Userlist");
+                    b.ToTable("user");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.mainm", b =>
@@ -79,15 +66,11 @@ namespace WebApplication1.Migrations
                         .HasForeignKey("User2id");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Userlist", b =>
+            modelBuilder.Entity("WebApplication1.Models.user", b =>
                 {
-                    b.HasOne("WebApplication1.Models.mainm", "mainm")
+                    b.HasOne("WebApplication1.Models.mainm")
                         .WithMany("Userlist")
                         .HasForeignKey("mainmId");
-
-                    b.HasOne("WebApplication1.Models.user", "user")
-                        .WithMany()
-                        .HasForeignKey("userid");
                 });
 #pragma warning restore 612, 618
         }

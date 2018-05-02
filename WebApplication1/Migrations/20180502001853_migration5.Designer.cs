@@ -11,9 +11,10 @@ using WebApplication1.data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DBC))]
-    partial class DBCModelSnapshot : ModelSnapshot
+    [Migration("20180502001853_migration5")]
+    partial class migration5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,11 +30,15 @@ namespace WebApplication1.Migrations
 
                     b.Property<int?>("User2id");
 
+                    b.Property<int?>("Userlistid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("User1id");
 
                     b.HasIndex("User2id");
+
+                    b.HasIndex("Userlistid");
 
                     b.ToTable("mainm");
                 });
@@ -43,29 +48,25 @@ namespace WebApplication1.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("userlistid");
+
                     b.Property<string>("username");
 
                     b.HasKey("id");
 
+                    b.HasIndex("userlistid");
+
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Userlist", b =>
+            modelBuilder.Entity("WebApplication1.Models.userlist", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("mainmId");
+                    b.HasKey("id");
 
-                    b.Property<int?>("userid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("mainmId");
-
-                    b.HasIndex("userid");
-
-                    b.ToTable("Userlist");
+                    b.ToTable("userlist");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.mainm", b =>
@@ -77,17 +78,17 @@ namespace WebApplication1.Migrations
                     b.HasOne("WebApplication1.Models.user", "User2")
                         .WithMany()
                         .HasForeignKey("User2id");
+
+                    b.HasOne("WebApplication1.Models.userlist", "Userlist")
+                        .WithMany()
+                        .HasForeignKey("Userlistid");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Userlist", b =>
+            modelBuilder.Entity("WebApplication1.Models.user", b =>
                 {
-                    b.HasOne("WebApplication1.Models.mainm", "mainm")
+                    b.HasOne("WebApplication1.Models.userlist")
                         .WithMany("Userlist")
-                        .HasForeignKey("mainmId");
-
-                    b.HasOne("WebApplication1.Models.user", "user")
-                        .WithMany()
-                        .HasForeignKey("userid");
+                        .HasForeignKey("userlistid");
                 });
 #pragma warning restore 612, 618
         }

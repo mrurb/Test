@@ -11,9 +11,10 @@ using WebApplication1.data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DBC))]
-    partial class DBCModelSnapshot : ModelSnapshot
+    [Migration("20180502004345_migration10")]
+    partial class migration10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,7 +66,7 @@ namespace WebApplication1.Migrations
 
                     b.HasIndex("userid");
 
-                    b.ToTable("Userlist");
+                    b.ToTable("userlist");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.mainm", b =>

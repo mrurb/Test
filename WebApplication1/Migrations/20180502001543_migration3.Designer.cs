@@ -11,9 +11,10 @@ using WebApplication1.data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DBC))]
-    partial class DBCModelSnapshot : ModelSnapshot
+    [Migration("20180502001543_migration3")]
+    partial class migration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,24 +51,6 @@ namespace WebApplication1.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("WebApplication1.Models.Userlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("mainmId");
-
-                    b.Property<int?>("userid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("mainmId");
-
-                    b.HasIndex("userid");
-
-                    b.ToTable("Userlist");
-                });
-
             modelBuilder.Entity("WebApplication1.Models.mainm", b =>
                 {
                     b.HasOne("WebApplication1.Models.user", "User1")
@@ -77,17 +60,6 @@ namespace WebApplication1.Migrations
                     b.HasOne("WebApplication1.Models.user", "User2")
                         .WithMany()
                         .HasForeignKey("User2id");
-                });
-
-            modelBuilder.Entity("WebApplication1.Models.Userlist", b =>
-                {
-                    b.HasOne("WebApplication1.Models.mainm", "mainm")
-                        .WithMany("Userlist")
-                        .HasForeignKey("mainmId");
-
-                    b.HasOne("WebApplication1.Models.user", "user")
-                        .WithMany()
-                        .HasForeignKey("userid");
                 });
 #pragma warning restore 612, 618
         }

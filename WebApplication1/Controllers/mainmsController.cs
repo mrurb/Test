@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         // GET: mainms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.mainm.Include(c => c.User1).Include(c => c.User2).Include(c => c.Userlist).ToListAsync());
+            return View(await _context.mainm.Include(u => u.User1).Include(u => u.User2).Include(u => u.Userlist).ThenInclude(u => u.user).ToListAsync());
         }
 
         // GET: mainms/Details/5
@@ -54,16 +54,11 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id")] mainm mainm)
+        public async Task<IActionResult> Create([Bind("Id")] mainm mainm)
         {
             if (ModelState.IsValid)
             {
-				var list = new List<user>();
-				list.Add(new user() { id = 1 });
-				list.Add(new user() { id = 2 });
-				mainm.User1 = new user { id = 1 };
-				mainm.User2 = new user { id = 2 };
-				_context.Add(mainm);
+                _context.Add(mainm);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -91,7 +86,7 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id")] mainm mainm)
+        public async Task<IActionResult> Edit(int id, [Bind("Id")] mainm mainm)
         {
             if (id != mainm.Id)
             {

@@ -13,7 +13,6 @@ namespace WebApplication1.data
 		{
 
 		}
-
 		public DbSet<mainm> mainm { get; set; }
 		public DbSet<user> user { get; set; }
 	}

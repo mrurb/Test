@@ -11,8 +11,8 @@ using WebApplication1.data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DBC))]
-    [Migration("20180501234229_init2")]
-    partial class init2
+    [Migration("20180502002758_migration7")]
+    partial class migration7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

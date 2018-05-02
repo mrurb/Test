@@ -11,8 +11,8 @@ using WebApplication1.data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DBC))]
-    [Migration("20180501232601_init")]
-    partial class init
+    [Migration("20180502001607_migration4")]
+    partial class migration4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,18 +23,18 @@ namespace WebApplication1.Migrations
 
             modelBuilder.Entity("WebApplication1.Models.mainm", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("user1id");
+                    b.Property<int?>("User1id");
 
-                    b.Property<int?>("user2id");
+                    b.Property<int?>("User2id");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("user1id");
+                    b.HasIndex("User1id");
 
-                    b.HasIndex("user2id");
+                    b.HasIndex("User2id");
 
                     b.ToTable("mainm");
                 });
@@ -44,22 +44,33 @@ namespace WebApplication1.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("mainmId");
+
                     b.Property<string>("username");
 
                     b.HasKey("id");
+
+                    b.HasIndex("mainmId");
 
                     b.ToTable("user");
                 });
 
             modelBuilder.Entity("WebApplication1.Models.mainm", b =>
                 {
-                    b.HasOne("WebApplication1.Models.user", "user1")
+                    b.HasOne("WebApplication1.Models.user", "User1")
                         .WithMany()
-                        .HasForeignKey("user1id");
+                        .HasForeignKey("User1id");
 
-                    b.HasOne("WebApplication1.Models.user", "user2")
+                    b.HasOne("WebApplication1.Models.user", "User2")
                         .WithMany()
-                        .HasForeignKey("user2id");
+                        .HasForeignKey("User2id");
+                });
+
+            modelBuilder.Entity("WebApplication1.Models.user", b =>
+                {
+                    b.HasOne("WebApplication1.Models.mainm")
+                        .WithMany("Userslist")
+                        .HasForeignKey("mainmId");
                 });
 #pragma warning restore 612, 618
         }

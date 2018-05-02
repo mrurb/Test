@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace WebApplication1.Migrations
 {
-    public partial class init : Migration
+    public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace WebApplication1.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    mainmId = table.Column<int>(nullable: true),
                     username = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,46 +27,67 @@ namespace WebApplication1.Migrations
                 name: "mainm",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    user1id = table.Column<int>(nullable: true),
-                    user2id = table.Column<int>(nullable: true)
+                    User1id = table.Column<int>(nullable: true),
+                    User2id = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_mainm", x => x.id);
+                    table.PrimaryKey("PK_mainm", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_mainm_user_user1id",
-                        column: x => x.user1id,
+                        name: "FK_mainm_user_User1id",
+                        column: x => x.User1id,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_mainm_user_user2id",
-                        column: x => x.user2id,
+                        name: "FK_mainm_user_User2id",
+                        column: x => x.User2id,
                         principalTable: "user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_mainm_user1id",
+                name: "IX_mainm_User1id",
                 table: "mainm",
-                column: "user1id");
+                column: "User1id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_mainm_user2id",
+                name: "IX_mainm_User2id",
                 table: "mainm",
-                column: "user2id");
+                column: "User2id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_mainmId",
+                table: "user",
+                column: "mainmId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_user_mainm_mainmId",
+                table: "user",
+                column: "mainmId",
+                principalTable: "mainm",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "mainm");
+            migrationBuilder.DropForeignKey(
+                name: "FK_mainm_user_User1id",
+                table: "mainm");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_mainm_user_User2id",
+                table: "mainm");
 
             migrationBuilder.DropTable(
                 name: "user");
+
+            migrationBuilder.DropTable(
+                name: "mainm");
         }
     }
 }
